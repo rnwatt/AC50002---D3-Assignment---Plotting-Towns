@@ -1,5 +1,6 @@
 # AC50002---D3-Assignment---Plotting-Towns
 D3 Assignment for AC50002
+https://stackoverflow.com/questions/19625334/how-to-create-an-event-handler-for-a-range-slider - Question asked by kalpetros - Oct 28, 2013 at 0:17
 ChatGPT - OpenAI
 Prompt:
 Write a D3.js program that consumes feed from a server link, without visualisation
@@ -82,4 +83,83 @@ d3.json("uk-geojson-data.js", function (ukData) {
         .style("fill", "lightblue")
         .style("stroke", "gray");
 });
+Prompt:
+How would I add a hover function where hovering over a point shows more details from the json
+Answer:
+To add a hover function that displays more details when hovering over a point, you can use the mouseover event in D3.js. Here's how you can modify your code to include a hover function:
 
+document.addEventListener('DOMContentLoaded', function () {
+    var svg;
+    function LoadData(numPlots) {
+        // Define the URL of the server feed
+        const jsonFeed = 'http://34.38.72.236/Circles/Towns/50';
+
+        // Fetch data from the server
+        d3.json(jsonFeed, function (error, data) {
+            if (error) {
+                console.error('Error fetching data:', error);
+            } else {
+                // Rest of your code...
+
+                // Filter the data to select the first 'numPlots' data points
+                const filteredData = data.slice(0, numPlots);
+
+                // Remove previous plots
+                svg.selectAll(".point").remove();
+
+                // Append new data points
+                var point = svg.append("g");
+                point.selectAll("circle")
+                    .data(filteredData)
+                    .enter().append("circle")
+                    .attr("class", "point")
+                    .attr("cx", function (d) {
+                        return projection([d.lng, d.lat])[0];
+                    })
+                    .attr("cy", function (d) {
+                        return projection([d.lng, d.lat])[1];
+                    })
+                    .attr("r", 3) // Radius
+                    .on("mouseover", function (event, d) {
+                        // Show details when hovering over a point
+                        tooltip.transition()
+                            .duration(200)
+                            .style("opacity", .9);
+                        tooltip.html("Details: " + JSON.stringify(d))
+                            .style("left", (event.pageX + 5) + "px")
+                            .style("top", (event.pageY - 28) + "px");
+                    })
+                    .on("mouseout", function (d) {
+                        // Hide details when not hovering over a point
+                        tooltip.transition()
+                            .duration(500)
+                            .style("opacity", 0);
+                    });
+
+                onDataLoaded();
+            }
+        });
+    }
+
+    function refreshButton() {
+        var sliderValue = document.getElementById('plotSlider').value;
+        svg.selectAll(".point").remove(); // Remove previous data points before loading new data
+        LoadData(sliderValue); // Call the LoadData function to load and render data with the slider value
+    }
+
+    // Add an event listener to the refresh button
+    document.getElementById('refreshButton').addEventListener('click', refreshButton);
+
+    // Tooltip for displaying details on hover
+    var tooltip = d3.select("body").append("div")
+        .attr("class", "tooltip")
+        .style("opacity", 0);
+
+    // Rest of your code...
+});
+In this code:
+
+The mouseover event is used to display details in a tooltip when hovering over a point.
+The mouseout event is used to hide the tooltip when not hovering over a point.
+The tooltip is appended to the body of the HTML document and positioned relative to the mouse cursor.
+Ensure that you have appropriate styles for the tooltip in your CSS to control its appearance. You can customize the tooltip content and styling based on your specific requirements.

@@ -1,6 +1,7 @@
 # AC50002---D3-Assignment---Plotting-Towns
 D3 Assignment for AC50002
 https://stackoverflow.com/questions/19625334/how-to-create-an-event-handler-for-a-range-slider - Question asked by kalpetros - Oct 28, 2013 at 0:17
+https://www.tutorialsteacher.com/d3js/animation-with-d3js - D3.js Animations - 
 ChatGPT - OpenAI
 Prompt:
 Write a D3.js program that consumes feed from a server link, without visualisation

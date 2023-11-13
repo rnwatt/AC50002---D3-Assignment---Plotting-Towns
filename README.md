@@ -2,6 +2,7 @@
 D3 Assignment for AC50002
 https://stackoverflow.com/questions/19625334/how-to-create-an-event-handler-for-a-range-slider - Question asked by kalpetros - Oct 28, 2013 at 0:17
 https://www.tutorialsteacher.com/d3js/animation-with-d3js - D3.js Animations - 
+https://d3-graph-gallery.com/graph/backgroundmap_country.html - D3 geojson map UK - Yan Holtz - 2018
 ChatGPT - OpenAI
 Prompt:
 Write a D3.js program that consumes feed from a server link, without visualisation
